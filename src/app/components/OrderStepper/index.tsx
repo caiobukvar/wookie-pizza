@@ -11,31 +11,17 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveStep, RootState } from "../../store";
 
-interface OrderStepperProps {
-  selectedOption: string;
-}
-
-const OrderStepper: React.FC<OrderStepperProps> = ({ selectedOption }) => {
+const OrderStepper = () => {
   const activeStep = useSelector((state: RootState) => state.activeStep);
-  console.log(activeStep);
 
-  let steps;
-
-  if (selectedOption === "manual") {
-    steps = [
-      { title: "First", description: "Monte sua pizza" },
-      { title: "Second", description: "Date & Time" },
-      { title: "Third", description: "Select Rooms" },
-    ];
-  } else {
-    steps = [
-      { title: "First", description: "Escolha uma recomendação" },
-      { title: "Second", description: "Date & Time" },
-      { title: "Third", description: "Select Rooms" },
-    ];
-  }
+  const steps = [
+    { title: "First", description: "Escolha a massa" },
+    { title: "Second", description: "Escolha o sabor" },
+    { title: "Third", description: "Resumo do pedido" },
+  ];
 
   const activeStepText = steps[activeStep].description;
+
   return (
     <Stack w="100%">
       <Stepper size="sm" index={activeStep} gap="0">
