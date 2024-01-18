@@ -1,3 +1,11 @@
 .img {
   border-radius: 5px;
+  max-height: 140px;
+  min-height: 140px;
+}
+
+.badge {
+  position: absolute;
+  right: -15px;
+  top: -15px;
 }

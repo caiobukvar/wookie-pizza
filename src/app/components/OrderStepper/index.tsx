@@ -8,23 +8,24 @@ import {
   Stepper,
   Text,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { setActiveStep, RootState } from "../../store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const OrderStepper = () => {
   const activeStep = useSelector((state: RootState) => state.activeStep);
 
   const steps = [
     { title: "First", description: "Escolha a massa" },
-    { title: "Second", description: "Escolha o sabor" },
-    { title: "Third", description: "Resumo do pedido" },
+    { title: "Second", description: "Escolha o tamanho" },
+    { title: "Third", description: "Escolha o sabor" },
+    { title: "Fourth", description: "Resumo do pedido" },
   ];
 
   const activeStepText = steps[activeStep].description;
 
   return (
     <Stack w="100%">
-      <Stepper size="sm" index={activeStep} gap="0">
+      <Stepper size="sm" index={activeStep}>
         {steps.map((step, index) => (
           <Step key={index}>
             <StepIndicator>

@@ -2,17 +2,57 @@
   {
     "name": "Calabresa",
     "ingredients": "Molho de tomate, mussarela, calabresa, cebola",
-    "price": 50,
+    "price": 49.9,
     "image": "/images/calabresa.jpg",
     "day": "Segunda-feira",
     "points": 50
   },
   {
     "name": "Pepperoni",
-    "ingredients": "Molho de tomate, mussarela, pepperoni",
-    "price": 50,
+    "ingredients": "Molho de tomate, mussarela e pepperoni",
+    "price": 56.9,
     "image": "/images/pepperoni.jfif",
     "day": "Terça-feira",
+    "points": 50
+  },
+  {
+    "name": "Marguerita",
+    "ingredients": "Molho de tomate, mussarela, manjericão e tomate em rodelas",
+    "price": 49.9,
+    "image": "/images/marguerita.jpeg",
+    "day": "Quarta-feira",
+    "points": 50
+  },
+  {
+    "name": "Frango com catupiry",
+    "ingredients": "Molho de tomate, mussarela, frango desfiado e catupiry",
+    "price": 49.9,
+    "image": "/images/francatu.jfif",
+    "day": "Quinta-feira",
+    "points": 50
+  },
+  {
+    "name": "Mussarela",
+    "ingredients": "Molho de tomate e mussarela no capricho",
+    "price": 39.9,
+    "image": "/images/mussarela.jfif",
+    "day": "Sexta-feira",
+    "points": 50
+  },
+  {
+    "name": "Lombo canadense",
+    "ingredients": "Molho de tomate, mussarela, lombo canadense, catupiry e champignon",
+    "price": 52.9,
+    "image": "/images/canadense.jpg",
+    "day": "Sábado",
+    "points": 50
+  },
+  {
+    "name": "Rúcula",
+    "ingredients": "Molho de tomate, mussarela, folhas de rúcula e tomate seco",
+    "price": 59.9,
+    "image": "/images/rucula.png",
+    "day": "Domingo",
     "points": 50
   }
 ]

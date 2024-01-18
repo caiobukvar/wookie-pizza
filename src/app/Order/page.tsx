@@ -12,22 +12,30 @@ import { useRouter } from "next/navigation";
 
 export interface Pizza {
   dough: string;
+  size: string;
   flavor: string;
   price: number;
+  amount: number;
+  points: number;
 }
 
 export default function Order() {
   const router = useRouter();
   const dispatch = useDispatch();
   const activeStep = useSelector((state: RootState) => state.activeStep);
-  const [pizza, setPizza] = useState<Pizza>({
+  const [order, setOrder] = useState<Pizza>({
     dough: "",
+    size: "",
     flavor: "",
     price: 0,
+    amount: 0,
+    points: 0,
   });
 
+  console.log(order);
+
   const handleStepChange = (step: number) => {
-    if (step >= 3) {
+    if (step >= 4) {
       return;
     }
 
@@ -47,10 +55,10 @@ export default function Order() {
       <OrderStepper />
 
       <VStack>
-        {activeStep === 2 ? (
+        {activeStep === 3 ? (
           <Review />
         ) : (
-          <MakeYourPizza setPizza={setPizza} pizza={pizza} />
+          <MakeYourPizza setOrder={setOrder} order={order} />
         )}
         <HStack spacing={4} mt={4} alignSelf="center">
           {activeStep >= 0 && (

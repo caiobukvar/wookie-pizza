@@ -21,8 +21,8 @@ export default function Home() {
       <Link href="/order">
         <Button
           leftIcon={<PiPizzaBold size={20} />}
-          backgroundColor="#96b613"
-          _hover={{ backgroundColor: "#96b613b3" }}
+          backgroundColor="#facb57"
+          _hover={{ backgroundColor: "#facb57b3" }}
           color="#231f20"
           size="lg"
           p={3}

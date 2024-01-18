@@ -3,18 +3,19 @@ import { RootState } from "@/app/store";
 import { HStack, Radio, Text, VStack, useRadioGroup } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import Flavors from "../Flavors";
-interface Translation {
+import SizeRadio from "../SizeRadio";
+interface Thickness {
   thin: string;
   medium: string;
   thick: string;
 }
 
 interface MakeYourPizzaProps {
-  setPizza: (pizza: Pizza) => void;
-  pizza: Pizza;
+  setOrder: (order: Pizza) => void;
+  order: Pizza;
 }
 
-const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setPizza, pizza }) => {
+const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
   const activeStep = useSelector((state: RootState) => state.activeStep);
 
   const options = ["thin", "medium", "thick"];
@@ -25,7 +26,7 @@ const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setPizza, pizza }) => {
     thick: "Massa grossa",
   };
 
-  const translate = (key: keyof Translation) => {
+  const translate = (key: keyof Thickness) => {
     return translation[key] || key;
   };
 
@@ -33,11 +34,13 @@ const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setPizza, pizza }) => {
     name: "massa",
     defaultValue: "thin",
     onChange: (value: string) =>
-      setPizza({
-        ...setPizza,
+      setOrder({
+        ...setOrder,
         dough: value,
-        flavor: pizza.flavor,
-        price: pizza.price,
+        size: order.size,
+        flavor: order.flavor,
+        price: order.price,
+        amount: order.amount,
       }),
   });
 
@@ -52,7 +55,7 @@ const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setPizza, pizza }) => {
               const radio = getRadioProps({ value });
               return (
                 <Radio key={value} {...radio}>
-                  {translate(value as keyof Translation)}
+                  {translate(value as keyof Thickness)}
                 </Radio>
               );
             })}
@@ -62,7 +65,12 @@ const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setPizza, pizza }) => {
 
       {activeStep === 1 && (
         <VStack>
-          <Text>Sabores</Text>
+          <SizeRadio setOrder={setOrder} order={order} />
+        </VStack>
+      )}
+
+      {activeStep === 2 && (
+        <VStack>
           <Flavors />
         </VStack>
       )}
