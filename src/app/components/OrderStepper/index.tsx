@@ -1,19 +1,24 @@
 import {
   Stack,
   Step,
-  Stepper,
   StepIcon,
   StepIndicator,
   StepSeparator,
   StepStatus,
+  Stepper,
   Text,
-  useSteps,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveStep, RootState } from "../../store";
+
 interface OrderStepperProps {
   selectedOption: string;
 }
 
 const OrderStepper: React.FC<OrderStepperProps> = ({ selectedOption }) => {
+  const activeStep = useSelector((state: RootState) => state.activeStep);
+  console.log(activeStep);
+
   let steps;
 
   if (selectedOption === "manual") {
@@ -29,11 +34,6 @@ const OrderStepper: React.FC<OrderStepperProps> = ({ selectedOption }) => {
       { title: "Third", description: "Select Rooms" },
     ];
   }
-
-  const { activeStep, setActiveStep } = useSteps({
-    index: 0,
-    count: steps.length,
-  });
 
   const activeStepText = steps[activeStep].description;
   return (
