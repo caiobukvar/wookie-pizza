@@ -1,9 +1,10 @@
 import { Pizza } from "@/app/order/page";
 import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
 
-interface PizzaSize {
+interface Thickness {
+  thin: string;
   medium: string;
-  big: string;
+  thick: string;
 }
 
 interface MakeYourPizzaProps {
@@ -11,12 +12,13 @@ interface MakeYourPizzaProps {
   order: Pizza;
 }
 
-const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
-  const options = ["medium", "big"];
+const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
+  const options = ["thin", "medium", "thick"];
 
   const translation = {
-    medium: "Pizza média",
-    big: "Pizza grande",
+    thin: "Massa fina",
+    medium: "Massa média",
+    thick: "Massa grossa",
   };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
@@ -34,7 +36,7 @@ const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
       }),
   });
 
-  const translate = (key: keyof PizzaSize) => {
+  const translate = (key: keyof Thickness) => {
     return translation[key] || key;
   };
 
@@ -47,7 +49,7 @@ const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
           const radio = getRadioProps({ value });
           return (
             <Radio key={value} {...radio} colorScheme="yellow">
-              {translate(value as keyof PizzaSize)}
+              {translate(value as keyof Thickness)}
             </Radio>
           );
         })}
@@ -56,4 +58,4 @@ const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
   );
 };
 
-export default SizeRadio;
+export default ThicknessRadio;

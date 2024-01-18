@@ -62,11 +62,19 @@ export default function Order() {
         )}
         <HStack spacing={4} mt={4} alignSelf="center">
           {activeStep >= 0 && (
-            <Button onClick={handleGoBack}>
+            <Button
+              onClick={handleGoBack}
+              colorScheme="yellow"
+              variant="outline"
+            >
               {activeStep === 0 ? "Cancelar" : "Voltar"}
             </Button>
           )}
-          <Button onClick={() => handleStepChange(activeStep + 1)}>
+          <Button
+            onClick={() => handleStepChange(activeStep + 1)}
+            colorScheme="yellow"
+            variant="outline"
+          >
             Próximo
           </Button>
         </HStack>

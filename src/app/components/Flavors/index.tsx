@@ -85,13 +85,12 @@ const Flavors: React.FC = () => {
                 className={styles.badge}
                 borderRadius={10}
                 p={2}
-                backgroundColor="#facb57e6"
-                border=".5px solid #231f20"
-                color="#231f20"
+                colorScheme="yellow"
+                variant="solid"
                 alignItems="center"
                 textAlign="center"
               >
-                <Text>Pizza do dia! </Text>
+                <Text>Pizza do dia </Text>
                 <Text>Ganhe {pizza.points} pontos!</Text>
               </Badge>
             )}
@@ -112,7 +111,7 @@ const Flavors: React.FC = () => {
                 <Heading size="md">{pizza.name}</Heading>
                 <Text fontSize="sm">{pizza.ingredients}</Text>
 
-                <Text color="blue.600" fontSize="2xl">
+                <Text color="yellow.600" fontSize="2xl">
                   R${pizza.price}0
                 </Text>
 
@@ -144,10 +143,10 @@ const Flavors: React.FC = () => {
               <ButtonGroup spacing="2">
                 <Button
                   variant="solid"
-                  colorScheme="blue"
+                  colorScheme="yellow"
                   onClick={() => handleSelect(pizza)}
                 >
-                  Selecionar
+                  Adicionar ao carrinho
                 </Button>
               </ButtonGroup>
             </CardFooter>

@@ -25,11 +25,11 @@ const OrderStepper = () => {
 
   return (
     <Stack w="100%">
-      <Stepper size="sm" index={activeStep}>
+      <Stepper size="sm" colorScheme="yellow" index={activeStep}>
         {steps.map((step, index) => (
           <Step key={index}>
             <StepIndicator>
-              <StepStatus complete={<StepIcon />} />
+              <StepStatus complete={<StepIcon color="black" />} />
             </StepIndicator>
             <StepSeparator />
           </Step>
