@@ -9,14 +9,27 @@ import {
   Text,
   useSteps,
 } from "@chakra-ui/react";
+interface OrderStepperProps {
+  selectedOption: string;
+}
 
-const steps = [
-  { title: "First", description: "Contact Info" },
-  { title: "Second", description: "Date & Time" },
-  { title: "Third", description: "Select Rooms" },
-];
+const OrderStepper: React.FC<OrderStepperProps> = ({ selectedOption }) => {
+  let steps;
 
-export default function OrderStepper() {
+  if (selectedOption === "manual") {
+    steps = [
+      { title: "First", description: "Monte sua pizza" },
+      { title: "Second", description: "Date & Time" },
+      { title: "Third", description: "Select Rooms" },
+    ];
+  } else {
+    steps = [
+      { title: "First", description: "Escolha uma recomendação" },
+      { title: "Second", description: "Date & Time" },
+      { title: "Third", description: "Select Rooms" },
+    ];
+  }
+
   const { activeStep, setActiveStep } = useSteps({
     index: 0,
     count: steps.length,
@@ -36,8 +49,10 @@ export default function OrderStepper() {
         ))}
       </Stepper>
       <Text>
-        Step {activeStep + 1}: <b>{activeStepText}</b>
+        Passo 0{activeStep + 1}: <b>{activeStepText}</b>
       </Text>
     </Stack>
   );
-}
+};
+
+export default OrderStepper;
