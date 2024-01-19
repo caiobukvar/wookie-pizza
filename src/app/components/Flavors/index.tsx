@@ -1,5 +1,5 @@
 "use client";
-import { Order } from "@/app/order/page";
+import { Order } from "../../order/page";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState } from "@/app/stores/store";
 import {
