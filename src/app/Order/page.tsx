@@ -7,6 +7,7 @@ import OrderStepper from "../components/OrderStepper";
 import Review from "../components/Review";
 import { RootState, setActiveStep } from "../stores/store";
 import styles from "./page.module.css";
+import Navbar from "../components/Navbar";
 export interface Flavor {
   flavor: string;
   price: number;
@@ -58,33 +59,36 @@ export default function Order() {
   };
 
   return (
-    <main className={styles.main}>
-      <OrderStepper />
+    <div className={styles.page}>
+      <Navbar />
+      <div className={styles.container}>
+        <OrderStepper />
 
-      <VStack>
-        {activeStep === 3 ? <Review /> : <MakeYourPizza />}
+        <VStack>
+          {activeStep === 3 ? <Review /> : <MakeYourPizza />}
 
-        {activeStep !== 3 && (
-          <HStack spacing={4} mt={4} alignSelf="center">
-            {activeStep >= 0 && (
+          {activeStep !== 3 && (
+            <HStack spacing={4} mt={4} alignSelf="center">
+              {activeStep >= 0 && (
+                <Button
+                  onClick={handleGoBack}
+                  colorScheme="yellow"
+                  variant="outline"
+                >
+                  {activeStep === 0 ? "Cancelar" : "Voltar"}
+                </Button>
+              )}
               <Button
-                onClick={handleGoBack}
+                onClick={() => handleStepChange(activeStep + 1)}
                 colorScheme="yellow"
                 variant="outline"
               >
-                {activeStep === 0 ? "Cancelar" : "Voltar"}
+                Próximo
               </Button>
-            )}
-            <Button
-              onClick={() => handleStepChange(activeStep + 1)}
-              colorScheme="yellow"
-              variant="outline"
-            >
-              Próximo
-            </Button>
-          </HStack>
-        )}
-      </VStack>
-    </main>
+            </HStack>
+          )}
+        </VStack>
+      </div>
+    </div>
   );
 }
