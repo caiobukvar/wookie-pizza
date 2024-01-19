@@ -1,13 +1,12 @@
 import {
-  configureStore,
   combineReducers,
+  configureStore,
   createAction,
   createReducer,
-  Action,
 } from "@reduxjs/toolkit";
-import userReducer, { UserState, loadUserState } from "./userSlice";
+import { Order } from "../types/types";
 import orderReducer from "./orderSlice";
-import { Order } from "../order/page";
+import userReducer, { UserState, loadUserState } from "./userSlice";
 
 export const setActiveStep = createAction<number>("SET_ACTIVE_STEP");
 

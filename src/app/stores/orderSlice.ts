@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Order } from "@/app/order/page";
+import { Order } from "../types/types";
 
 const initialState: Order = {
   flavors: [],

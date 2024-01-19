@@ -8,20 +8,6 @@ import Review from "../components/Review";
 import { RootState, setActiveStep } from "../stores/store";
 import styles from "./page.module.css";
 import Navbar from "../components/Navbar";
-export interface Flavor {
-  flavor: string;
-  price: number;
-  amount: number;
-  points: number;
-}
-export interface Order {
-  flavors: Flavor[];
-  dough: string;
-  size: string;
-  sizePrice: number;
-  price: number;
-  points: number;
-}
 
 export default function Order() {
   const router = useRouter();

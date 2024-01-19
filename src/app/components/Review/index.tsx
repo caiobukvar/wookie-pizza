@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { Order } from "@/app/order/page";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState, setActiveStep } from "@/app/stores/store";
 import { setPersistedUserPoints } from "@/app/stores/userSlice";
+import { Order } from "@/app/types/types";
 import {
   Button,
   Card,

@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import pizzaFlavors from "../../api/flavors.json";
 import styles from "./page.module.css";
+import { Flavor, Order } from "@/app/types/types";
 
 interface PizzaFlavor {
   id: number;
@@ -31,20 +32,6 @@ interface PizzaFlavor {
   price: number;
   image: string;
   day: string;
-  points: number;
-}
-export interface Flavor {
-  flavor: string;
-  price: number;
-  amount: number;
-  points: number;
-}
-export interface Order {
-  flavors: Flavor[];
-  dough: string;
-  size: string;
-  sizePrice: number;
-  price: number;
   points: number;
 }
 
