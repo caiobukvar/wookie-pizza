@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/config/toast.js"
+    "src/app/config/toast.js",
+    "public/infra/db/config.js"
   ],
   "exclude": ["node_modules"]
 }
