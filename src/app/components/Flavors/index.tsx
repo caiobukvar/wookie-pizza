@@ -130,7 +130,7 @@ const Flavors = () => {
     );
 
     if (existingFlavor) {
-      const updatedFlavors = order.flavors.map((flavor) =>
+      const updatedFlavors = order.flavors.map((flavor: Flavor) =>
         flavor.flavor === pizza.flavor
           ? {
               ...flavor,
