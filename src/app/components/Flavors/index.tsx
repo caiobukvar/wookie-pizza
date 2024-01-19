@@ -1,4 +1,7 @@
 "use client";
+import { Order } from "@/app/order/page";
+import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
+import { RootState } from "@/app/stores/store";
 import {
   Badge,
   Button,
@@ -12,19 +15,15 @@ import {
   InputGroup,
   Stack,
   Text,
-  Toast,
   VStack,
   Wrap,
   useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import pizzaFlavors from "../../api/flavors.json";
 import styles from "./page.module.css";
-import { RootState } from "@/app/stores/store";
-import { useDispatch, useSelector } from "react-redux";
-import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
-import { Order } from "../../order/page";
 
 interface PizzaFlavor {
   id: number;
@@ -127,7 +126,6 @@ const Flavors = () => {
             }
           : flavor
       );
-
       setOrder({
         ...order,
         flavors: updatedFlavors,
@@ -146,7 +144,6 @@ const Flavors = () => {
         ],
       });
     }
-
     toast({
       title: "Pedido adicionado ao carrinho!",
       status: "success",
@@ -192,7 +189,7 @@ const Flavors = () => {
                 <Text fontSize="sm">{pizza.ingredients}</Text>
 
                 <Text color="yellow.600" fontSize="2xl">
-                  R${order.sizePrice + pizza.price}0
+                  R${(order.sizePrice + pizza.price).toFixed(2)}
                 </Text>
 
                 <VStack spacing={0} alignItems="flex-start">

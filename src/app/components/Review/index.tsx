@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { Order } from "@/app/order/page";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
@@ -39,6 +40,16 @@ const Review = () => {
     dispatch(setActiveStep(step));
   };
 
+  const translation: Translation = {
+    thin: "Fina",
+    medium: "Média",
+    thick: "Grossa",
+  };
+
+  const translateDough = (originalDough: string) => {
+    return translation[originalDough] || originalDough;
+  };
+
   const updatePoints = () => {
     dispatch(setPersistedUserPoints(order.points));
   };
@@ -59,23 +70,7 @@ const Review = () => {
       price: totalPrice,
       points: totalPoints,
     });
-
-    updatePoints();
   };
-
-  const translation: Translation = {
-    thin: "Fina",
-    medium: "Média",
-    thick: "Grossa",
-  };
-
-  const translateDough = (originalDough: string) => {
-    return translation[originalDough] || originalDough;
-  };
-
-  useEffect(() => {
-    updateOrder();
-  }, []);
 
   const handleOrder = () => {
     toast({
@@ -84,9 +79,14 @@ const Review = () => {
       duration: 5000,
       isClosable: true,
     });
+    updatePoints();
     router.push("/");
     return dispatch(setActiveStep(0));
   };
+
+  useEffect(() => {
+    updateOrder();
+  }, []);
 
   return (
     <div>
@@ -122,7 +122,7 @@ const Review = () => {
                   Total:
                 </Text>
                 <Text as="b" color="yellow.600" fontSize={32}>
-                  R$ {order.price}0
+                  R$ {order.price.toFixed(2)}
                 </Text>
               </HStack>
               {order.points > 0 && (

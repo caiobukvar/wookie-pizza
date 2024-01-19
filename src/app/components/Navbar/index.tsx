@@ -21,12 +21,14 @@ export default function Navbar() {
             priority
           />
         </Link>
-        <VStack>
-          <Text>Bem-vindo, {user.name}!</Text>
-          <Badge variant="solid" colorScheme="yellow" p={2}>
+        <HStack textAlign="center" spacing={5}>
+          <Text as="b" fontSize="sm" maxW={100}>
+            Bem-vindo, {user.name}!
+          </Text>
+          <Badge variant="solid" colorScheme="yellow" p={3}>
             {user.points} pontos
           </Badge>
-        </VStack>
+        </HStack>
       </HStack>
     </div>
   );
