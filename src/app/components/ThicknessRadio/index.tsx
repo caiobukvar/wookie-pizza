@@ -23,7 +23,7 @@ const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "massa",
-    defaultValue: "medium",
+    defaultValue: order.dough || "medium",
     onChange: (value: string) =>
       setOrder({
         ...order,

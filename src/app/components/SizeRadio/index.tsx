@@ -1,5 +1,6 @@
-import { Pizza } from "@/app/order/page";
+import { Order } from "@/app/order/page";
 import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 interface PizzaSize {
   medium: string;
@@ -7,8 +8,8 @@ interface PizzaSize {
 }
 
 interface MakeYourPizzaProps {
-  setOrder: (order: Pizza) => void;
-  order: Pizza;
+  setOrder: (order: Order) => void;
+  order: Order;
 }
 
 const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
@@ -21,14 +22,14 @@ const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "massa",
-    defaultValue: "medium",
+    defaultValue: order.size || "medium",
     onChange: (value: string) =>
       setOrder({
         ...order,
         dough: order.dough,
         size: order.size === "" ? "medium" : value,
         flavor: order.flavor,
-        price: order.price,
+        price: value === "big" ? 15 : 0,
         amount: order.amount,
         points: order.points,
       }),

@@ -20,10 +20,18 @@ import { useState } from "react";
 import pizzaFlavors from "../../api/flavors.json";
 import { MakeYourPizzaProps } from "../MakeYourPizza";
 import styles from "./page.module.css";
-import { Order } from "@/app/order/page";
+
+interface PizzaFlavor {
+  name: string;
+  ingredients: string;
+  price: number;
+  image: string;
+  day: string;
+  points: number;
+}
 
 const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
-  const [flavors, setFlavors] = useState<Order[]>(pizzaFlavors);
+  const [flavors, setFlavors] = useState<PizzaFlavor[]>(pizzaFlavors);
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   const today = new Date()
     .toLocaleDateString("pt-BR", { weekday: "long" })
@@ -47,7 +55,7 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     });
   };
 
-  const calculatePoints = (pizza: Pizza): number => {
+  const calculatePoints = (pizza: PizzaFlavor): number => {
     return pizza.day === today ? 1 : 0;
   };
 
@@ -61,7 +69,9 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     }
   });
 
-  const handleSelect = (pizza: Pizza) => {
+  console.log(order);
+
+  const handleSelect = (pizza: PizzaFlavor) => {
     const points = calculatePoints(pizza);
   };
 
@@ -102,7 +112,7 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
                 <Text fontSize="sm">{pizza.ingredients}</Text>
 
                 <Text color="yellow.600" fontSize="2xl">
-                  R${pizza.price}0
+                  R${order.price + pizza.price}0
                 </Text>
 
                 <VStack spacing={0} alignItems="flex-start">
