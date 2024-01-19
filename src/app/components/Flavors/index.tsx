@@ -16,13 +16,17 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import pizzaFlavors from "../../api/flavors.json";
-import { MakeYourPizzaProps } from "../MakeYourPizza";
 import styles from "./page.module.css";
+import { RootState } from "@/app/stores/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Order } from "@/app/order/page";
+import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 
 interface PizzaFlavor {
-  name: string;
+  id: number;
+  flavor: string;
   ingredients: string;
   price: number;
   image: string;
@@ -30,12 +34,31 @@ interface PizzaFlavor {
   points: number;
 }
 
-const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
+const Flavors = () => {
+  const dispatch = useDispatch();
+
+  const order = useSelector((state: RootState) => state.order);
+
+  const setOrder = (newOrder: Order) => {
+    dispatch(setOrderAction(newOrder));
+  };
+
   const [flavors, setFlavors] = useState<PizzaFlavor[]>(pizzaFlavors);
+
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+
   const today = new Date()
     .toLocaleDateString("pt-BR", { weekday: "long" })
     .toLowerCase();
+
+  useEffect(() => {
+    setFlavors((prevFlavors) =>
+      prevFlavors.map((pizza) => ({
+        ...pizza,
+        totalPrice: order.sizePrice + pizza.price,
+      }))
+    );
+  }, [order.sizePrice]);
 
   const handleIncrement = (pizzaName: string) => {
     setQuantities((prevQuantities) => ({
@@ -54,9 +77,12 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
       };
     });
   };
-
-  const calculatePoints = (pizza: PizzaFlavor): number => {
-    return pizza.day === today ? 1 : 0;
+  const calculatePoints = (pizza: PizzaFlavor, quantity: number): number => {
+    if (pizza.day.toLowerCase() === today) {
+      return quantity === 1 ? pizza.points : pizza.points * quantity;
+    } else {
+      return 0;
+    }
   };
 
   const sortedFlavors = [...flavors].sort((a, b) => {
@@ -69,10 +95,58 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     }
   });
 
-  console.log(order);
+  const updateOrderPrice = () => {
+    const totalPrice = order.flavors.reduce(
+      (accumulator, flavor) => accumulator + flavor.price,
+      0
+    );
+
+    setOrder({
+      ...order,
+      price: totalPrice,
+    });
+  };
 
   const handleSelect = (pizza: PizzaFlavor) => {
-    const points = calculatePoints(pizza);
+    const quantity = quantities[pizza.flavor] || 1;
+    const price = (order.sizePrice + pizza.price) * quantity;
+    const pointsPerPizza = calculatePoints(pizza, quantity);
+    const existingFlavor = order.flavors.find(
+      (flavor) => flavor.flavor === pizza.flavor
+    );
+
+    if (existingFlavor) {
+      const updatedFlavors = order.flavors.map((flavor) =>
+        flavor.flavor === pizza.flavor
+          ? {
+              ...flavor,
+              amount: quantity,
+              price,
+              points: pointsPerPizza,
+            }
+          : flavor
+      );
+
+      console.log(updatedFlavors);
+
+      setOrder({
+        ...order,
+        flavors: updatedFlavors,
+      });
+    } else {
+      setOrder({
+        ...order,
+        flavors: [
+          ...order.flavors,
+          {
+            flavor: pizza.flavor,
+            amount: quantity,
+            price,
+            points: pointsPerPizza,
+          },
+        ],
+      });
+    }
   };
 
   return (
@@ -97,7 +171,7 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
             <CardBody>
               <Image
                 src={pizza.image}
-                alt={`Pizza de ${pizza.name}`}
+                alt={`Pizza de ${pizza.flavor}`}
                 width={250}
                 height={140}
                 className={styles.img}
@@ -108,11 +182,11 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
                 justifyContent="space-between"
                 h="220px"
               >
-                <Heading size="md">{pizza.name}</Heading>
+                <Heading size="md">{pizza.flavor}</Heading>
                 <Text fontSize="sm">{pizza.ingredients}</Text>
 
                 <Text color="yellow.600" fontSize="2xl">
-                  R${order.price + pizza.price}0
+                  R${order.sizePrice + pizza.price}0
                 </Text>
 
                 <VStack spacing={0} alignItems="flex-start">
@@ -120,16 +194,16 @@ const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
                     Quantidade
                   </Text>
                   <InputGroup size="sm">
-                    <Button onClick={() => handleDecrement(pizza.name)}>
+                    <Button onClick={() => handleDecrement(pizza.flavor)}>
                       -
                     </Button>
                     <Input
-                      value={quantities[pizza.name] || 0}
+                      value={quantities[pizza.flavor] || 0}
                       w="50px"
                       readOnly
                       textAlign="center"
                     />
-                    <Button onClick={() => handleIncrement(pizza.name)}>
+                    <Button onClick={() => handleIncrement(pizza.flavor)}>
                       +
                     </Button>
                   </InputGroup>

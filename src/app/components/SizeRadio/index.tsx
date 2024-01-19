@@ -1,18 +1,25 @@
+"use client";
 import { Order } from "@/app/order/page";
 import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
+import { RootState } from "@/app/stores/store";
 
 interface PizzaSize {
   medium: string;
   big: string;
 }
 
-interface MakeYourPizzaProps {
-  setOrder: (order: Order) => void;
-  order: Order;
-}
+const SizeRadio = () => {
+  const dispatch = useDispatch();
 
-const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
+  const order = useSelector((state: RootState) => state.order);
+
+  const setOrder = (newOrder: Order) => {
+    dispatch(setOrderAction(newOrder));
+  };
+
   const options = ["medium", "big"];
 
   const translation = {
@@ -26,12 +33,8 @@ const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     onChange: (value: string) =>
       setOrder({
         ...order,
-        dough: order.dough,
-        size: order.size === "" ? "medium" : value,
-        flavor: order.flavor,
-        price: value === "big" ? 15 : 0,
-        amount: order.amount,
-        points: order.points,
+        size: value === "big" ? value : "medium",
+        sizePrice: value === "big" ? 15 : 0,
       }),
   });
 

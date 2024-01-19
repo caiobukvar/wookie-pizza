@@ -1,5 +1,8 @@
 import { Order } from "@/app/order/page";
 import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
+import { RootState } from "@/app/stores/store";
 
 interface Thickness {
   thin: string;
@@ -7,12 +10,19 @@ interface Thickness {
   thick: string;
 }
 
-interface MakeYourPizzaProps {
-  setOrder: (order: Order) => void;
-  order: Order;
-}
+const ThicknessRadio = () => {
+  const dispatch = useDispatch();
 
-const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
+  const order = useSelector((state: RootState) => state.order);
+
+  const setOrder = (newOrder: Order) => {
+    dispatch(setOrderAction(newOrder));
+  };
+
+  const setSizePrice = (sizePrice: number) => {
+    dispatch(setOrderAction({ ...order, sizePrice }));
+  };
+
   const options = ["thin", "medium", "thick"];
 
   const translation = {
@@ -28,11 +38,6 @@ const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
       setOrder({
         ...order,
         dough: value,
-        size: order.size,
-        flavor: order.flavor,
-        price: order.price,
-        amount: order.amount,
-        points: order.points,
       }),
   });
 

@@ -1,6 +1,7 @@
 [
   {
-    "name": "Calabresa",
+    "id": 1,
+    "flavor": "Calabresa",
     "ingredients": "Molho de tomate, mussarela, calabresa, cebola",
     "price": 49.9,
     "image": "/images/calabresa.jpg",
@@ -8,7 +9,8 @@
     "points": 50
   },
   {
-    "name": "Pepperoni",
+    "id": 2,
+    "flavor": "Pepperoni",
     "ingredients": "Molho de tomate, mussarela e pepperoni",
     "price": 56.9,
     "image": "/images/pepperoni.jfif",
@@ -16,7 +18,8 @@
     "points": 50
   },
   {
-    "name": "Marguerita",
+    "id": 3,
+    "flavor": "Marguerita",
     "ingredients": "Molho de tomate, mussarela, manjericão e tomate em rodelas",
     "price": 49.9,
     "image": "/images/marguerita.jpeg",
@@ -24,7 +27,8 @@
     "points": 50
   },
   {
-    "name": "Frango com catupiry",
+    "id": 4,
+    "flavor": "Frango com catupiry",
     "ingredients": "Molho de tomate, mussarela, frango desfiado e catupiry",
     "price": 49.9,
     "image": "/images/francatu.jfif",
@@ -32,7 +36,8 @@
     "points": 50
   },
   {
-    "name": "Mussarela",
+    "id": 5,
+    "flavor": "Mussarela",
     "ingredients": "Molho de tomate e mussarela no capricho",
     "price": 39.9,
     "image": "/images/mussarela.jfif",
@@ -40,7 +45,8 @@
     "points": 50
   },
   {
-    "name": "Lombo canadense",
+    "id": 6,
+    "flavor": "Lombo canadense",
     "ingredients": "Molho de tomate, mussarela, lombo canadense, catupiry e champignon",
     "price": 52.9,
     "image": "/images/canadense.jpg",
@@ -48,7 +54,8 @@
     "points": 50
   },
   {
-    "name": "Rúcula",
+    "id": 7,
+    "flavor": "Rúcula",
     "ingredients": "Molho de tomate, mussarela, folhas de rúcula e tomate seco",
     "price": 59.9,
     "image": "/images/rucula.png",
