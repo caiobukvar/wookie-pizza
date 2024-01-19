@@ -7,13 +7,9 @@ import {
   CardBody,
   CardFooter,
   Divider,
-  FormLabel,
-  HStack,
   Heading,
   Input,
   InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
   Stack,
   Text,
   VStack,
@@ -21,19 +17,10 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
-import pizzaFlavors from "../../api/flavors.json";
+import { MakeYourPizzaProps } from "../MakeYourPizza";
 import styles from "./page.module.css";
-interface Pizza {
-  name: string;
-  ingredients: string;
-  price: number;
-  image: string;
-  day: string;
-  points: number;
-}
 
-const Flavors: React.FC = () => {
-  const [flavors, setFlavors] = useState<Pizza[]>(pizzaFlavors);
+const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   const today = new Date()
     .toLocaleDateString("pt-BR", { weekday: "long" })

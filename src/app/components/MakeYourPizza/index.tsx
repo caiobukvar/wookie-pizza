@@ -1,17 +1,21 @@
-import { Pizza } from "@/app/order/page";
+"use client";
+import { Order } from "@/app/order/page";
 import { RootState } from "@/app/store";
-import { HStack, Radio, Text, VStack, useRadioGroup } from "@chakra-ui/react";
+import { HStack, VStack } from "@chakra-ui/react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import pizzaFlavors from "../../api/flavors.json";
 import Flavors from "../Flavors";
 import SizeRadio from "../SizeRadio";
 import ThicknessRadio from "../ThicknessRadio";
 
-interface MakeYourPizzaProps {
-  setOrder: (order: Pizza) => void;
-  order: Pizza;
+export interface MakeYourPizzaProps {
+  order: Order;
+  setOrder: (order: Order) => void;
 }
 
 const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
+  const [flavors, setFlavors] = useState<Order[]>(pizzaFlavors);
   const activeStep = useSelector((state: RootState) => state.activeStep);
 
   return (
@@ -32,7 +36,7 @@ const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
 
       {activeStep === 2 && (
         <VStack>
-          <Flavors />
+          <Flavors setOrder={setOrder} order={order} />
         </VStack>
       )}
     </div>

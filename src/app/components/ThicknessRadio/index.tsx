@@ -1,4 +1,4 @@
-import { Pizza } from "@/app/order/page";
+import { Order } from "@/app/order/page";
 import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
 
 interface Thickness {
@@ -8,8 +8,8 @@ interface Thickness {
 }
 
 interface MakeYourPizzaProps {
-  setOrder: (order: Pizza) => void;
-  order: Pizza;
+  setOrder: (order: Order) => void;
+  order: Order;
 }
 
 const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
@@ -26,15 +26,17 @@ const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     defaultValue: "medium",
     onChange: (value: string) =>
       setOrder({
-        ...setOrder,
-        dough: order.dough,
-        size: value,
+        ...order,
+        dough: value === "medium" ? "medium" : value,
+        size: order.size,
         flavor: order.flavor,
         price: order.price,
         amount: order.amount,
         points: order.points,
       }),
   });
+
+  console.log(order);
 
   const translate = (key: keyof Thickness) => {
     return translation[key] || key;

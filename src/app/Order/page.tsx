@@ -10,7 +10,7 @@ import styles from "./page.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export interface Pizza {
+export interface Order {
   dough: string;
   size: string;
   flavor: string;
@@ -23,7 +23,7 @@ export default function Order() {
   const router = useRouter();
   const dispatch = useDispatch();
   const activeStep = useSelector((state: RootState) => state.activeStep);
-  const [order, setOrder] = useState<Pizza>({
+  const [order, setOrder] = useState<Order>({
     dough: "",
     size: "",
     flavor: "",
@@ -37,6 +37,13 @@ export default function Order() {
   const handleStepChange = (step: number) => {
     if (step >= 4) {
       return;
+    }
+
+    if (step === 0){
+      setOrder((prevOrder) => ({
+        ...prevOrder,
+        dough: order.dough,
+      }));
     }
 
     dispatch(setActiveStep(step));

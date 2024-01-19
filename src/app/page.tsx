@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { Button, Heading } from "@chakra-ui/react";
+import { Button, Heading, Text } from "@chakra-ui/react";
 import { PiPizzaBold } from "react-icons/pi";
 import Link from "next/link";
 
@@ -18,6 +18,8 @@ export default function Home() {
         />
       </div>
 
+      <Heading size="md">Seja bem-vindo à melhor pizzaria da galáxia!</Heading>
+
       <Link href="/order">
         <Button
           leftIcon={<PiPizzaBold size={20} />}
@@ -25,7 +27,7 @@ export default function Home() {
           size="lg"
           p={3}
         >
-          Começar
+          Fazer um pedido
         </Button>
       </Link>
     </main>
