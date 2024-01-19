@@ -124,8 +124,9 @@ const Flavors = () => {
 
     const price = (order.sizePrice + pizza.price) * quantity;
     const pointsPerPizza = calculatePoints(pizza, quantity);
+
     const existingFlavor = order.flavors.find(
-      (flavor) => flavor.flavor === pizza.flavor
+      (flavor: Flavor) => flavor.flavor === pizza.flavor
     );
 
     if (existingFlavor) {
