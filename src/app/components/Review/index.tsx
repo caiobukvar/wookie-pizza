@@ -1,9 +1,8 @@
 "use client";
-import { RootState, setActiveStep } from "@/app/stores/store";
-import { useDispatch, useSelector } from "react-redux";
-import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { Order } from "@/app/order/page";
-import { useEffect } from "react";
+import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
+import { RootState, setActiveStep } from "@/app/stores/store";
+import { setPersistedUserPoints } from "@/app/stores/userSlice";
 import {
   Button,
   Card,
@@ -18,6 +17,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 interface Translation {
   [key: string]: string;
 }
@@ -28,6 +29,7 @@ const Review = () => {
   const dispatch = useDispatch();
   const activeStep = useSelector((state: RootState) => state.activeStep);
   const order = useSelector((state: RootState) => state.order);
+  const user = useSelector((state: RootState) => state.user.users[0]);
 
   const setOrder = (newOrder: Order) => {
     dispatch(setOrderAction(newOrder));
@@ -35,6 +37,10 @@ const Review = () => {
 
   const handleStepChange = (step: number) => {
     dispatch(setActiveStep(step));
+  };
+
+  const updatePoints = () => {
+    dispatch(setPersistedUserPoints(order.points));
   };
 
   const updateOrder = () => {
@@ -53,6 +59,8 @@ const Review = () => {
       price: totalPrice,
       points: totalPoints,
     });
+
+    updatePoints();
   };
 
   const translation: Translation = {
@@ -97,7 +105,7 @@ const Review = () => {
                 </Text>
 
                 {order.flavors.map((flavor) => (
-                  <Text>
+                  <Text key={flavor.flavor}>
                     {flavor.amount}x {flavor.flavor}
                   </Text>
                 ))}
@@ -119,10 +127,13 @@ const Review = () => {
               </HStack>
               {order.points > 0 && (
                 <Text color="yellow.600">
-                  Ao finalizar a compra, você ganhará{" "}
-                  <b>{order.points} pontos</b>!
+                  Ao finalizar a compra, você ganhará <b>{order.points} </b>
+                  pontos!
                 </Text>
               )}
+              <Text color="yellow.600">
+                No momento, você possui <b>{user.points} </b>pontos.
+              </Text>
             </VStack>
           </VStack>
         </CardBody>

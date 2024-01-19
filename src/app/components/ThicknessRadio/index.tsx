@@ -1,3 +1,4 @@
+"use client";
 import { Order } from "@/app/order/page";
 import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
