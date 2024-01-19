@@ -1,5 +1,4 @@
 "use client";
-import { Order } from "../../order/page";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState } from "@/app/stores/store";
 import {
@@ -32,6 +31,20 @@ interface PizzaFlavor {
   price: number;
   image: string;
   day: string;
+  points: number;
+}
+export interface Flavor {
+  flavor: string;
+  price: number;
+  amount: number;
+  points: number;
+}
+export interface Order {
+  flavors: Flavor[];
+  dough: string;
+  size: string;
+  sizePrice: number;
+  price: number;
   points: number;
 }
 
