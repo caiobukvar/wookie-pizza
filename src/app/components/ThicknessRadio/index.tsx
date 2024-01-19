@@ -27,7 +27,7 @@ const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     onChange: (value: string) =>
       setOrder({
         ...order,
-        dough: value === "medium" ? "medium" : value,
+        dough: value,
         size: order.size,
         flavor: order.flavor,
         price: order.price,
@@ -35,8 +35,6 @@ const ThicknessRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
         points: order.points,
       }),
   });
-
-  console.log(order);
 
   const translate = (key: keyof Thickness) => {
     return translation[key] || key;

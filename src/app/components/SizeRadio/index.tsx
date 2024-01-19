@@ -24,9 +24,9 @@ const SizeRadio: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
     defaultValue: "medium",
     onChange: (value: string) =>
       setOrder({
-        ...setOrder,
+        ...order,
         dough: order.dough,
-        size: value,
+        size: order.size === "" ? "medium" : value,
         flavor: order.flavor,
         price: order.price,
         amount: order.amount,

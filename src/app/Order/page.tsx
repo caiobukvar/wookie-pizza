@@ -24,8 +24,8 @@ export default function Order() {
   const dispatch = useDispatch();
   const activeStep = useSelector((state: RootState) => state.activeStep);
   const [order, setOrder] = useState<Order>({
-    dough: "",
-    size: "",
+    dough: "medium",
+    size: "medium",
     flavor: "",
     price: 0,
     amount: 0,
@@ -39,7 +39,7 @@ export default function Order() {
       return;
     }
 
-    if (step === 0){
+    if (step === 0) {
       setOrder((prevOrder) => ({
         ...prevOrder,
         dough: order.dough,

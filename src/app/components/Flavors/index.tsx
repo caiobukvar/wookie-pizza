@@ -17,10 +17,13 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
+import pizzaFlavors from "../../api/flavors.json";
 import { MakeYourPizzaProps } from "../MakeYourPizza";
 import styles from "./page.module.css";
+import { Order } from "@/app/order/page";
 
 const Flavors: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
+  const [flavors, setFlavors] = useState<Order[]>(pizzaFlavors);
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   const today = new Date()
     .toLocaleDateString("pt-BR", { weekday: "long" })

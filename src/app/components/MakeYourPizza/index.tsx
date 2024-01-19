@@ -15,7 +15,6 @@ export interface MakeYourPizzaProps {
 }
 
 const MakeYourPizza: React.FC<MakeYourPizzaProps> = ({ setOrder, order }) => {
-  const [flavors, setFlavors] = useState<Order[]>(pizzaFlavors);
   const activeStep = useSelector((state: RootState) => state.activeStep);
 
   return (
