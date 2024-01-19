@@ -1,20 +1,23 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  createAction,
+  createReducer,
+  Action,
+} from "@reduxjs/toolkit";
 import userReducer, { UserState, loadUserState } from "./userSlice";
 import orderReducer from "./orderSlice";
 import { Order } from "../order/page";
 
-export const SET_ACTIVE_STEP = "SET_ACTIVE_STEP";
-
-export const setActiveStep = (step: number) => ({
-  type: SET_ACTIVE_STEP,
-  payload: step,
-});
+export const setActiveStep = createAction<number>("SET_ACTIVE_STEP");
 
 export interface RootState {
   user: UserState;
   order: Order;
   activeStep: number;
 }
+
+const initialUserState: UserState = loadUserState();
 
 const initialOrderState: Order = {
   flavors: [],
@@ -25,26 +28,22 @@ const initialOrderState: Order = {
   points: 0,
 };
 
-// Load the initialUserState from localStorage
-const initialUserState: UserState = loadUserState();
-
 const initialState: RootState = {
   user: initialUserState,
   order: initialOrderState,
   activeStep: 0,
 };
 
+const activeStepReducer = createReducer(initialState.activeStep, (builder) => {
+  builder.addCase(setActiveStep, (state, action) => {
+    return action.payload;
+  });
+});
+
 const rootReducer = combineReducers({
   user: userReducer,
   order: orderReducer,
-  activeStep: (state = initialState.activeStep, action) => {
-    switch (action.type) {
-      case SET_ACTIVE_STEP:
-        return action.payload;
-      default:
-        return state;
-    }
-  },
+  activeStep: activeStepReducer,
 });
 
 const store = configureStore({

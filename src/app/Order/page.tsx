@@ -14,7 +14,6 @@ export interface Flavor {
   amount: number;
   points: number;
 }
-
 export interface Order {
   flavors: Flavor[];
   dough: string;
