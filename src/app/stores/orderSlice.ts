@@ -7,7 +7,6 @@ const initialState: Order = {
   size: "medium",
   sizePrice: 0,
   price: 0,
-  amount: 0,
   points: 0,
 };
 

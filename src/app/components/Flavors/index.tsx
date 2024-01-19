@@ -100,6 +100,16 @@ const Flavors = () => {
 
   const handleSelect = (pizza: PizzaFlavor) => {
     const quantity = quantities[pizza.flavor] || 0;
+
+    if (quantity <= 0) {
+      return toast({
+        title: "Favor adicionar a quantidade desejada!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
     const price = (order.sizePrice + pizza.price) * quantity;
     const pointsPerPizza = calculatePoints(pizza, quantity);
     const existingFlavor = order.flavors.find(
@@ -134,15 +144,6 @@ const Flavors = () => {
             points: pointsPerPizza,
           },
         ],
-      });
-    }
-
-    if (quantity <= 0) {
-      return toast({
-        title: "Favor adicionar a quantidade desejada!",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
       });
     }
 

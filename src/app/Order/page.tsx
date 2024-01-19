@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import MakeYourPizza from "../components/MakeYourPizza";
 import OrderStepper from "../components/OrderStepper";
 import Review from "../components/Review";
-import styles from "./page.module.css";
 import { RootState, setActiveStep } from "../stores/store";
-import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
+import styles from "./page.module.css";
 export interface Flavor {
   flavor: string;
   price: number;
@@ -21,7 +20,6 @@ export interface Order {
   size: string;
   sizePrice: number;
   price: number;
-  amount: number;
   points: number;
 }
 
@@ -31,9 +29,6 @@ export default function Order() {
   const dispatch = useDispatch();
   const order = useSelector((state: RootState) => state.order);
   const activeStep = useSelector((state: RootState) => state.activeStep);
-  const setOrder = (newOrder: Order) => {
-    dispatch(setOrderAction(newOrder));
-  };
 
   const handleStepChange = (step: number) => {
     if (step >= 4) {
