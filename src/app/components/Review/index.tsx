@@ -116,7 +116,7 @@ const Review = () => {
             </VStack>
 
             <VStack w="100%" alignItems="flex-start" spacing={5}>
-              <Divider borderColor="yellow" w="100%" />
+              <Divider borderColor="#b7791f" w="100%" />
               <HStack>
                 <Text as="b" fontSize={32}>
                   Total:
@@ -125,15 +125,17 @@ const Review = () => {
                   R$ {order.price.toFixed(2)}
                 </Text>
               </HStack>
-              {order.points > 0 && (
-                <Text color="yellow.600">
-                  Ao finalizar a compra, você ganhará <b>{order.points} </b>
-                  pontos!
+              <VStack alignItems="flex-start">
+                {order.points > 0 && (
+                  <Text color="yellow.600" fontSize="sm">
+                    Ao finalizar a compra, você ganhará <b>{order.points} </b>
+                    pontos!
+                  </Text>
+                )}
+                <Text color="yellow.600" fontSize="sm">
+                  No momento, você possui <b>{user.points} </b>pontos.
                 </Text>
-              )}
-              <Text color="yellow.600">
-                No momento, você possui <b>{user.points} </b>pontos.
-              </Text>
+              </VStack>
             </VStack>
           </VStack>
         </CardBody>
