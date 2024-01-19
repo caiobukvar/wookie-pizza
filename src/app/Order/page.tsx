@@ -63,24 +63,27 @@ export default function Order() {
 
       <VStack>
         {activeStep === 3 ? <Review /> : <MakeYourPizza />}
-        <HStack spacing={4} mt={4} alignSelf="center">
-          {activeStep >= 0 && (
+
+        {activeStep !== 3 && (
+          <HStack spacing={4} mt={4} alignSelf="center">
+            {activeStep >= 0 && (
+              <Button
+                onClick={handleGoBack}
+                colorScheme="yellow"
+                variant="outline"
+              >
+                {activeStep === 0 ? "Cancelar" : "Voltar"}
+              </Button>
+            )}
             <Button
-              onClick={handleGoBack}
+              onClick={() => handleStepChange(activeStep + 1)}
               colorScheme="yellow"
               variant="outline"
             >
-              {activeStep === 0 ? "Cancelar" : "Voltar"}
+              Próximo
             </Button>
-          )}
-          <Button
-            onClick={() => handleStepChange(activeStep + 1)}
-            colorScheme="yellow"
-            variant="outline"
-          >
-            Próximo
-          </Button>
-        </HStack>
+          </HStack>
+        )}
       </VStack>
     </main>
   );

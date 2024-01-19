@@ -1,5 +1,5 @@
 "use client";
-import { RootState } from "@/app/stores/store";
+import { RootState, setActiveStep } from "@/app/stores/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { Order } from "@/app/order/page";
@@ -10,6 +10,8 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Divider,
+  HStack,
   Heading,
   Text,
   VStack,
@@ -20,12 +22,17 @@ interface Translation {
 
 const Review = () => {
   const dispatch = useDispatch();
-
+  const activeStep = useSelector((state: RootState) => state.activeStep);
   const order = useSelector((state: RootState) => state.order);
 
   const setOrder = (newOrder: Order) => {
     dispatch(setOrderAction(newOrder));
   };
+
+  const handleStepChange = (step: number) => {
+    dispatch(setActiveStep(step));
+  };
+
   const updateOrder = () => {
     const totalPrice = order.flavors.reduce(
       (accumulator, flavor) => accumulator + flavor.price + order.sizePrice,
@@ -45,9 +52,9 @@ const Review = () => {
   };
 
   const translation: Translation = {
-    thin: "Massa fina",
-    medium: "Massa média",
-    thick: "Massa grossa",
+    thin: "Fina",
+    medium: "Média",
+    thick: "Grossa",
   };
 
   const translateDough = (originalDough: string) => {
@@ -57,7 +64,6 @@ const Review = () => {
   useEffect(() => {
     updateOrder();
   }, []);
-  console.log(order);
 
   return (
     <div>
@@ -66,33 +72,56 @@ const Review = () => {
           <Heading size="md"> Seu pedido:</Heading>
         </CardHeader>
         <CardBody>
-          <VStack w="100%" alignItems="flex-start" spacing={5}>
-            <Text as="b">
-              {order.flavors.length > 1
-                ? "Pizzas escolhidas"
-                : "Pizza escolhida"}
-            </Text>
-
-            {order.flavors.map((flavor) => (
-              <>
-                <Text>
-                  {flavor.amount}x {flavor.flavor}
+          <VStack w="100%" alignItems="flex-start" spacing={20}>
+            <VStack w="100%" alignItems="flex-start" spacing={5}>
+              <VStack alignItems="flex-start">
+                <Text as="b">
+                  {order.flavors.length > 1
+                    ? "Pizzas escolhidas:"
+                    : "Pizza escolhida:"}
                 </Text>
-              </>
-            ))}
-            <Text>
-              <b>Massa:</b> {translateDough(order.dough)}{" "}
-            </Text>
+
+                {order.flavors.map((flavor) => (
+                  <Text>
+                    {flavor.amount}x {flavor.flavor}
+                  </Text>
+                ))}
+              </VStack>
+              <Text>
+                <b>Massa:</b> {translateDough(order.dough)}
+              </Text>
+            </VStack>
+
+            <VStack w="100%" alignItems="flex-start" spacing={5}>
+              <Divider borderColor="yellow" w="100%" />
+              <HStack>
+                <Text as="b" fontSize={32}>
+                  Total:
+                </Text>
+                <Text as="b" color="yellow.600" fontSize={32}>
+                  R$ {order.price}0
+                </Text>
+              </HStack>
+              {order.points > 0 && (
+                <Text color="yellow.600">
+                  Ao finalizar a compra, você ganhará{" "}
+                  <b>{order.points} pontos</b>!
+                </Text>
+              )}
+            </VStack>
           </VStack>
-          <Text>
-            <b>Total:</b> R$ {order.price}
-          </Text>
-          <Text>
-            Ao finalizar a compra, você ganhará {order.points} pontos!
-          </Text>
         </CardBody>
         <CardFooter>
-          <Button>View here</Button>
+          <HStack spacing={5}>
+            <Button
+              onClick={() => handleStepChange(activeStep - 1)}
+              colorScheme="yellow"
+              variant="outline"
+            >
+              Voltar
+            </Button>
+            <Button colorScheme="yellow">Finalizar pedido</Button>
+          </HStack>
         </CardFooter>
       </Card>
     </div>
