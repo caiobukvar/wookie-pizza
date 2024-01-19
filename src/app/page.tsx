@@ -1,8 +1,8 @@
+import { Button, Heading } from "@chakra-ui/react";
 import Image from "next/image";
-import styles from "./page.module.css";
-import { Button, Heading, Text } from "@chakra-ui/react";
-import { PiPizzaBold } from "react-icons/pi";
 import Link from "next/link";
+import { PiPizzaBold } from "react-icons/pi";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (

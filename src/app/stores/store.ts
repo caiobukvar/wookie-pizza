@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import userReducer, { UserState, loadUserState } from "./userSlice";
 import orderReducer from "./orderSlice";
 import { Order } from "../order/page";
 
-const SET_ACTIVE_STEP = "SET_ACTIVE_STEP";
+export const SET_ACTIVE_STEP = "SET_ACTIVE_STEP";
 
 export const setActiveStep = (step: number) => ({
   type: SET_ACTIVE_STEP,
@@ -10,6 +11,7 @@ export const setActiveStep = (step: number) => ({
 });
 
 export interface RootState {
+  user: UserState;
   order: Order;
   activeStep: number;
 }
@@ -23,22 +25,27 @@ const initialOrderState: Order = {
   points: 0,
 };
 
+// Load the initialUserState from localStorage
+const initialUserState: UserState = loadUserState();
+
 const initialState: RootState = {
+  user: initialUserState,
   order: initialOrderState,
   activeStep: 0,
 };
 
-const rootReducer = (state: RootState = initialState, action: any) => {
-  switch (action.type) {
-    case SET_ACTIVE_STEP:
-      return { ...state, activeStep: action.payload };
-    default:
-      return {
-        order: orderReducer(state.order, action),
-        activeStep: state.activeStep,
-      };
-  }
-};
+const rootReducer = combineReducers({
+  user: userReducer,
+  order: orderReducer,
+  activeStep: (state = initialState.activeStep, action) => {
+    switch (action.type) {
+      case SET_ACTIVE_STEP:
+        return action.payload;
+      default:
+        return state;
+    }
+  },
+});
 
 const store = configureStore({
   reducer: rootReducer,
