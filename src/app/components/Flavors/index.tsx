@@ -23,8 +23,8 @@ import pizzaFlavors from "../../api/flavors.json";
 import styles from "./page.module.css";
 import { RootState } from "@/app/stores/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Order } from "@/app/order/page";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
+import { Order } from "../../order/page";
 
 interface PizzaFlavor {
   id: number;
