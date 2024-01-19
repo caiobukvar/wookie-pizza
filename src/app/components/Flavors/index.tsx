@@ -12,8 +12,10 @@ import {
   InputGroup,
   Stack,
   Text,
+  Toast,
   VStack,
   Wrap,
+  useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -35,6 +37,7 @@ interface PizzaFlavor {
 }
 
 const Flavors = () => {
+  const toast = useToast();
   const dispatch = useDispatch();
 
   const order = useSelector((state: RootState) => state.order);
@@ -96,7 +99,7 @@ const Flavors = () => {
   });
 
   const handleSelect = (pizza: PizzaFlavor) => {
-    const quantity = quantities[pizza.flavor] || 1;
+    const quantity = quantities[pizza.flavor] || 0;
     const price = (order.sizePrice + pizza.price) * quantity;
     const pointsPerPizza = calculatePoints(pizza, quantity);
     const existingFlavor = order.flavors.find(
@@ -133,6 +136,22 @@ const Flavors = () => {
         ],
       });
     }
+
+    if (quantity <= 0) {
+      return toast({
+        title: "Favor adicionar a quantidade desejada!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    toast({
+      title: "Pedido adicionado ao carrinho!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
   };
 
   return (
