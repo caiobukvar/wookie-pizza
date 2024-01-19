@@ -1,3 +1,5 @@
+import { Order } from "@/app/order/page";
+import { RootState } from "@/app/stores/store";
 import {
   Stack,
   Step,
@@ -8,8 +10,7 @@ import {
   Stepper,
   Text,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
 
 const OrderStepper = () => {
   const activeStep = useSelector((state: RootState) => state.activeStep);
