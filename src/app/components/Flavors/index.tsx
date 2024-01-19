@@ -95,18 +95,6 @@ const Flavors = () => {
     }
   });
 
-  const updateOrderPrice = () => {
-    const totalPrice = order.flavors.reduce(
-      (accumulator, flavor) => accumulator + flavor.price,
-      0
-    );
-
-    setOrder({
-      ...order,
-      price: totalPrice,
-    });
-  };
-
   const handleSelect = (pizza: PizzaFlavor) => {
     const quantity = quantities[pizza.flavor] || 1;
     const price = (order.sizePrice + pizza.price) * quantity;
@@ -126,8 +114,6 @@ const Flavors = () => {
             }
           : flavor
       );
-
-      console.log(updatedFlavors);
 
       setOrder({
         ...order,
