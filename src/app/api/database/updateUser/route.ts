@@ -1,5 +1,5 @@
+"use server";
 import { prisma } from "@/lib/prisma";
-import { User } from "@/services/database/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest, res: NextResponse) {

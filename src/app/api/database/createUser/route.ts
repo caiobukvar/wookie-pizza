@@ -1,3 +1,4 @@
+"use server";
 import { createUser } from "@/services/database/user";
 import { NextRequest, NextResponse } from "next/server";
 
