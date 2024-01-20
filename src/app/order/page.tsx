@@ -1,17 +1,17 @@
 "use client";
-import { Button, HStack, VStack, useToast } from "@chakra-ui/react";
+import { Button, HStack, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import MakeYourPizza from "../components/MakeYourPizza";
+import Navbar from "../components/Navbar";
 import OrderStepper from "../components/OrderStepper";
 import Review from "../components/Review";
 import { RootState, setActiveStep } from "../stores/store";
 import styles from "./page.module.css";
-import Navbar from "../components/Navbar";
+import { ShowToast } from "@/services/toast";
 
 export default function Order() {
   const router = useRouter();
-  const toast = useToast();
   const dispatch = useDispatch();
   const order = useSelector((state: RootState) => state.order);
   const activeStep = useSelector((state: RootState) => state.activeStep);
@@ -23,12 +23,7 @@ export default function Order() {
 
     if (step === 2) {
       if (!order.flavors) {
-        toast({
-          title: "Adicione pelo menos uma pizza ao carrinho!",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+        return ShowToast("Adicione pelo menos uma pizza ao carrinho!", "error");
       }
     }
 

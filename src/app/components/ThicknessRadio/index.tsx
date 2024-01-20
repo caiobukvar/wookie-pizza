@@ -3,7 +3,7 @@ import { HStack, Radio, useRadioGroup } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState } from "@/app/stores/store";
-import { Order } from "@/app/types/types";
+import { Order } from "@/types/types";
 
 interface Thickness {
   thin: string;
