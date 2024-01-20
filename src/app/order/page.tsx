@@ -1,5 +1,5 @@
 "use client";
-import { Button, HStack, VStack } from "@chakra-ui/react";
+import { Button, HStack, VStack, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import MakeYourPizza from "../components/MakeYourPizza";
@@ -8,23 +8,42 @@ import OrderStepper from "../components/OrderStepper";
 import Review from "../components/Review";
 import { RootState, setActiveStep } from "../stores/store";
 import styles from "./page.module.css";
-import { ShowToast } from "@/services/toast";
+import { useEffect, useState } from "react";
+import { setUser } from "../stores/userSlice";
+import { updateOrder } from "@/app/orderUtils";
+import { setOrder } from "../stores/orderSlice";
 
 export default function Order() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const toast = useToast();
   const order = useSelector((state: RootState) => state.order);
   const activeStep = useSelector((state: RootState) => state.activeStep);
 
+  useEffect(() => {
+    fetch("/api/database/getUser")
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(setUser(data.user));
+      });
+  }, [dispatch]);
+
   const handleStepChange = (step: number) => {
-    if (step >= 4) {
+    if (activeStep >= 4) {
       return;
     }
 
-    if (step === 2) {
-      if (!order.flavors) {
-        return ShowToast("Adicione pelo menos uma pizza ao carrinho!", "error");
+    if (activeStep === 2) {
+      if (!order.flavors || order.flavors.length === 0) {
+        return toast({
+          title: "Adicione pelo menos uma pizza ao carrinho!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
+
+      updateOrder(order, setOrder, dispatch);
     }
 
     dispatch(setActiveStep(step));

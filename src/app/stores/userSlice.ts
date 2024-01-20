@@ -1,61 +1,38 @@
-import { User } from "@/services/database/user";
+// userSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const UPDATE_USER_POINTS = "UPDATE_USER_POINTS";
-
-export const updateUserPoints = (user: User, newPoints: number) => ({
-  type: UPDATE_USER_POINTS,
-  payload: { user, newPoints },
-});
-
-export interface UserState {
-  users: User[];
+export interface User {
+  id?: number;
+  name: string;
+  points: number;
 }
 
-const getDefaultUser = (): User => ({
-  name: "Caio Bukvar",
-  points: 0,
-});
+export interface UserState {
+  currentUser: User | null;
+}
 
-export const loadUserState = (): UserState => {
-  if (typeof localStorage !== "undefined") {
-    const storedState = localStorage.getItem("userState");
-    return storedState
-      ? JSON.parse(storedState)
-      : { users: [getDefaultUser()] };
-  } else {
-    return { users: [getDefaultUser()] };
-  }
+export const userInitialState: UserState = {
+  currentUser: null,
 };
-
-const saveUserState = (state: UserState): void => {
-  localStorage.setItem("userState", JSON.stringify(state));
-};
-
-const initialUserState: UserState = loadUserState();
 
 const userSlice = createSlice({
   name: "user",
-  initialState: initialUserState,
+  initialState: userInitialState,
   reducers: {
-    setUserPoints: (
-      state,
-      action: PayloadAction<{ user: User; newPoints: number }>
-    ) => {
-      const { user, newPoints } = action.payload;
-      const existingUser = state.users.find((u) => u.name === user.name);
+    setUser: (state, action: PayloadAction<User | null>) => {
+      state.currentUser = action.payload;
 
-      if (existingUser) {
-        existingUser.points = newPoints;
-        saveUserState(state);
-      }
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
-    setPersistedUserPoints: (state, action: PayloadAction<number>) => {
-      state.users[0].points = action.payload;
-      saveUserState(state);
+    updateUserPoints: (state, action: PayloadAction<number>) => {
+      if (state.currentUser) {
+        state.currentUser.points += action.payload;
+      }
+
+      localStorage.setItem("user", JSON.stringify(state.currentUser));
     },
   },
 });
 
-export const { setUserPoints, setPersistedUserPoints } = userSlice.actions;
+export const { setUser, updateUserPoints } = userSlice.actions;
 export default userSlice.reducer;
