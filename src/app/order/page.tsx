@@ -21,7 +21,8 @@ export default function Order() {
   const activeStep = useSelector((state: RootState) => state.activeStep);
 
   useEffect(() => {
-    fetch("/api/database/getUser")
+    const id = 1;
+    fetch(`/api/database/getUser?id=${id}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUser(data.user));

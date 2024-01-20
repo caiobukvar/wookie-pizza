@@ -1,4 +1,3 @@
-// orderUtils.ts
 import { Order } from "@/types/types";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { Dispatch } from "redux";

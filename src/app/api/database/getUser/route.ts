@@ -1,9 +1,10 @@
-"use server";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { parse } from "url";
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  const id = 1;
+  const { query } = parse(req.url, true);
+  const id = query.id;
 
   try {
     const user = await prisma.user.findFirst({

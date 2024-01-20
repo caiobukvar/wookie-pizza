@@ -2,7 +2,6 @@ import { createUser } from "@/services/database/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  "use server";
   const { searchParams } = req.nextUrl;
 
   const name = searchParams.get("name");
