@@ -27,7 +27,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/config/toast.js"
+    "src/app/config/toast.js",
+    "src/services/database/user.ts",
+    "src/services/toast.jsx",
+    "src/app/api/database/getUser/user.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,7 @@
 "use client";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState } from "@/app/stores/store";
+import { Flavor, Order } from "@/types/types";
 import {
   Badge,
   Button,
@@ -23,7 +24,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import pizzaFlavors from "../../api/flavors.json";
 import styles from "./page.module.css";
-import { Flavor, Order } from "@/types/types";
 
 interface PizzaFlavor {
   id: number;
@@ -36,9 +36,8 @@ interface PizzaFlavor {
 }
 
 const Flavors = () => {
-  const toast = useToast();
   const dispatch = useDispatch();
-
+  const toast = useToast();
   const order = useSelector((state: RootState) => state.order);
 
   const setOrder = (newOrder: Order) => {

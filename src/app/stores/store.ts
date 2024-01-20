@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { Order } from "../../types/types";
 import orderReducer from "./orderSlice";
-import userReducer, { UserState, loadUserState } from "./userSlice";
+import userReducer, { userInitialState, UserState } from "./userSlice";
 
 export const setActiveStep = createAction<number>("SET_ACTIVE_STEP");
 
@@ -15,8 +15,6 @@ export interface RootState {
   order: Order;
   activeStep: number;
 }
-
-const initialUserState: UserState = loadUserState();
 
 const initialOrderState: Order = {
   flavors: [],
@@ -28,7 +26,7 @@ const initialOrderState: Order = {
 };
 
 const initialState: RootState = {
-  user: initialUserState,
+  user: userInitialState,
   order: initialOrderState,
   activeStep: 0,
 };

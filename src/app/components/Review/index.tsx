@@ -2,7 +2,7 @@
 "use client";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState, setActiveStep } from "@/app/stores/store";
-import { setPersistedUserPoints } from "@/app/stores/userSlice";
+import { updateUserPoints } from "@/app/stores/userSlice";
 import { Order } from "@/types/types";
 import {
   Button,
@@ -18,19 +18,22 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 interface Translation {
   [key: string]: string;
 }
 
 const Review = () => {
-  const toast = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
+  const toast = useToast();
   const activeStep = useSelector((state: RootState) => state.activeStep);
   const order = useSelector((state: RootState) => state.order);
-  const user = useSelector((state: RootState) => state.user.users[0]);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
+  const [userData, setUserData] = useState();
+  const [error, setError] = useState<string | null>(null);
 
   const setOrder = (newOrder: Order) => {
     dispatch(setOrderAction(newOrder));
@@ -48,10 +51,6 @@ const Review = () => {
 
   const translateDough = (originalDough: string) => {
     return translation[originalDough] || originalDough;
-  };
-
-  const updatePoints = () => {
-    dispatch(setPersistedUserPoints(order.points));
   };
 
   const updateOrder = () => {
@@ -72,16 +71,39 @@ const Review = () => {
     });
   };
 
-  const handleOrder = () => {
-    toast({
-      title: "Seu pedido foi concluído, agora é só esperar chegar até você!",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
-    updatePoints();
-    router.push("/");
-    return dispatch(setActiveStep(0));
+  const handleOrder = async () => {
+    try {
+      const response = await fetch("/api/database/updateUser", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: 1,
+          points: order.points,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        setUserData(data.user);
+        dispatch(updateUserPoints(data.points));
+        toast({
+          title: "Pedido realizado com sucesso!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        router.push("/");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error);
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      return setError("Internal Server Error");
+    }
   };
 
   useEffect(() => {
@@ -90,7 +112,7 @@ const Review = () => {
 
   return (
     <div>
-      <Card>
+      <Card marginTop={10}>
         <CardHeader>
           <Heading size="md"> Seu pedido:</Heading>
         </CardHeader>
@@ -133,7 +155,7 @@ const Review = () => {
                   </Text>
                 )}
                 <Text color="yellow.600" fontSize="sm">
-                  No momento, você possui <b>{user.points} </b>pontos.
+                  No momento, você possui <b>{currentUser?.points} </b>pontos.
                 </Text>
               </VStack>
             </VStack>
