@@ -154,7 +154,7 @@ const Flavors = () => {
   };
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} marginTop={10}>
       <Wrap spacing={4}>
         {sortedFlavors.map((pizza, index) => (
           <Card key={index} maxW="250px" size="sm" p={2}>
@@ -197,7 +197,7 @@ const Flavors = () => {
                   <Text fontSize="sm" fontWeight="bold">
                     Quantidade
                   </Text>
-                  <InputGroup size="sm">
+                  <InputGroup size="sm" gap={2}>
                     <Button onClick={() => handleDecrement(pizza.flavor)}>
                       -
                     </Button>
