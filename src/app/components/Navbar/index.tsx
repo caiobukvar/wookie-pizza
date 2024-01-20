@@ -9,8 +9,6 @@ import styles from "./index.module.css";
 export default function Navbar() {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
-  console.log(currentUser);
-
   return (
     <div className={styles.navbar}>
       <HStack w="100%" justifyContent="space-between">

@@ -2,7 +2,7 @@
 "use client";
 import { setOrder as setOrderAction } from "@/app/stores/orderSlice";
 import { RootState, setActiveStep } from "@/app/stores/store";
-import { updateUserPoints } from "@/app/stores/userSlice";
+import { User, updateUserPoints } from "@/app/stores/userSlice";
 import { Order } from "@/types/types";
 import {
   Button,
@@ -32,12 +32,7 @@ const Review = () => {
   const order = useSelector((state: RootState) => state.order);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
-  const [userData, setUserData] = useState();
   const [error, setError] = useState<string | null>(null);
-
-  const setOrder = (newOrder: Order) => {
-    dispatch(setOrderAction(newOrder));
-  };
 
   const handleStepChange = (step: number) => {
     dispatch(setActiveStep(step));
@@ -51,24 +46,6 @@ const Review = () => {
 
   const translateDough = (originalDough: string) => {
     return translation[originalDough] || originalDough;
-  };
-
-  const updateOrder = () => {
-    const totalPrice = order.flavors.reduce(
-      (accumulator, flavor) => accumulator + flavor.price + order.sizePrice,
-      0
-    );
-
-    const totalPoints = order.flavors.reduce(
-      (accumulator, flavor) => accumulator + flavor.points,
-      0
-    );
-
-    setOrder({
-      ...order,
-      price: totalPrice,
-      points: totalPoints,
-    });
   };
 
   const handleOrder = async () => {
@@ -85,16 +62,30 @@ const Review = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        dispatch(updateUserPoints(order.points));
 
-        setUserData(data.user);
-        dispatch(updateUserPoints(data.points));
+        const storedUsersString = localStorage.getItem("users");
+        const storedUsers = storedUsersString
+          ? JSON.parse(storedUsersString)
+          : [];
+
+        const userIndex = storedUsers.findIndex(
+          (user: User) => user.name === currentUser?.name
+        );
+
+        if (userIndex !== -1) {
+          storedUsers[userIndex].points = order.points;
+
+          localStorage.setItem("users", JSON.stringify(storedUsers));
+        }
+
         toast({
           title: "Pedido realizado com sucesso!",
           status: "success",
           duration: 5000,
           isClosable: true,
         });
+
         router.push("/");
       } else {
         const errorData = await response.json();
@@ -103,12 +94,10 @@ const Review = () => {
     } catch (error) {
       console.error("Error updating user:", error);
       return setError("Internal Server Error");
+    } finally {
+      dispatch(setActiveStep(0));
     }
   };
-
-  useEffect(() => {
-    updateOrder();
-  }, []);
 
   return (
     <div>

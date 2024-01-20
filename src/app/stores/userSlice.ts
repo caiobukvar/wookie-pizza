@@ -21,12 +21,15 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User | null>) => {
       state.currentUser = action.payload;
+
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     updateUserPoints: (state, action: PayloadAction<number>) => {
-      console.log(state.currentUser);
       if (state.currentUser) {
         state.currentUser.points += action.payload;
       }
+
+      localStorage.setItem("user", JSON.stringify(state.currentUser));
     },
   },
 });

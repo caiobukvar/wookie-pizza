@@ -10,6 +10,8 @@ import { RootState, setActiveStep } from "../stores/store";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
 import { setUser } from "../stores/userSlice";
+import { updateOrder } from "@/app/orderUtils";
+import { setOrder } from "../stores/orderSlice";
 
 export default function Order() {
   const router = useRouter();
@@ -40,6 +42,8 @@ export default function Order() {
           isClosable: true,
         });
       }
+
+      updateOrder(order, setOrder, dispatch);
     }
 
     dispatch(setActiveStep(step));
