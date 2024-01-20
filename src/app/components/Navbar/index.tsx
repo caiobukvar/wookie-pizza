@@ -1,10 +1,10 @@
 "use client";
-import { Badge, HStack, Text, VStack } from "@chakra-ui/react";
+import { RootState } from "@/app/stores/store";
+import { Badge, HStack, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./index.module.css";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/stores/store";
+import styles from "./index.module.css";
 
 export default function Navbar() {
   const user = useSelector((state: RootState) => state.user.users[0]);

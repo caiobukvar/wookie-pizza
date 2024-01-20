@@ -4,7 +4,7 @@ import {
   createAction,
   createReducer,
 } from "@reduxjs/toolkit";
-import { Order } from "../types/types";
+import { Order } from "../../types/types";
 import orderReducer from "./orderSlice";
 import userReducer, { UserState, loadUserState } from "./userSlice";
 

@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import pizzaFlavors from "../../api/flavors.json";
 import styles from "./page.module.css";
-import { Flavor, Order } from "@/app/types/types";
+import { Flavor, Order } from "@/types/types";
 
 interface PizzaFlavor {
   id: number;
