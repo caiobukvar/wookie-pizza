@@ -1,5 +1,5 @@
+import { User } from "@/services/database/user";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../api/mockUser";
 
 export const UPDATE_USER_POINTS = "UPDATE_USER_POINTS";
 

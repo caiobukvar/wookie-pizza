@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-type User = {
+export type User = {
   name: string;
   points: number;
 };
