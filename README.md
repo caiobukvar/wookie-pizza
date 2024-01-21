@@ -17,14 +17,6 @@ Wookie Pizza is a project that allows users to create, customize and make pizza 
 
 Follow these instructions to set up and run the project on your local machine.
 
-### Technologies Used
-
-Next.js
-Chakra UI
-Prisma
-Redux
-PostgreSQL
-
 ### Prerequisites
 
 - Node.js (version X.X.X)
@@ -84,3 +76,11 @@ npm run studio
 npm run build
 npm start
 ```
+
+### Technologies Used
+
+Next.js
+Chakra UI
+Prisma
+Redux
+PostgreSQL
