@@ -79,8 +79,8 @@ npm start
 
 ### Technologies Used
 
-Next.js
-Chakra UI
-Prisma
-Redux
-PostgreSQL
+- Next.js
+- Chakra UI
+- Prisma
+- Redux
+- PostgreSQL
