@@ -9,8 +9,6 @@
 
 </div>
 
-#
-
 # Wookie Pizza
 
 Wookie Pizza is a project that allows users to create, customize and make pizza orders.
