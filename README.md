@@ -19,8 +19,8 @@ Follow these instructions to set up and run the project on your local machine.
 
 ### Prerequisites
 
-- Node.js (version X.X.X)
-- npm (version X.X.X)
+- Node.js (version 18.18.0)
+- npm (version 10.2.5)
 - PostgreSQL
 
 ### Installation
