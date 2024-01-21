@@ -11,7 +11,7 @@
 
 # Wookie Pizza
 
-Wookie Pizza is a project that allows users to create, customize and make pizza orders.
+Wookie Pizza is a project that allows users to create, customize and make pizza orders. Also, contains a point system for a pizza of the day, each day being a different flavor!
 
 ## Getting Started
 
